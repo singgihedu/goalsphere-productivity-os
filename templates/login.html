@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - GoalSphere</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+
+<body class="auth-body">
+
+<div class="auth-wrapper">
+
+    <!-- LEFT SIDE -->
+    <div class="auth-left">
+
+        <h1>GoalSphere</h1>
+
+        <p>
+            Plan • Track • Achieve
+        </p>
+
+        <span>
+            Your personal productivity OS
+        </span>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="auth-right">
+
+        <div class="auth-card">
+
+            <h2>Welcome Back</h2>
+            <p>Login to continue your journey</p>
+
+            <form method="POST">
+
+                <input type="email"
+                name="email"
+                placeholder="Email"
+                required>
+
+                <input type="password"
+                name="password"
+                placeholder="Password"
+                required>
+
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="switch">
+                Don't have account?
+                <a href="/register">Create Account</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

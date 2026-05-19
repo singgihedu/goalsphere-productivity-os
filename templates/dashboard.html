@@ -1,0 +1,1664 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- TOPBAR -->
+<section id="dashboard-section">
+
+    <div class="dashboard-container">
+    <!-- HERO DASHBOARD -->
+
+<div class="hero-dashboard">
+
+    <div class="hero-left">
+
+        <div class="hero-badge">
+            🚀 Productivity Workspace
+        </div>
+
+        <h1>
+            Build Your Future
+            With Consistency
+        </h1>
+
+        <p>
+            Track goals, habits, focus sessions,
+            productivity and personal growth
+            in one intelligent workspace.
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="#goals-section"
+            class="hero-btn primary">
+
+                Create Goal
+
+            </a>
+
+            <a href="#tools-section"
+            class="hero-btn secondary">
+
+                Start Focus
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+
+        <div class="hero-card">
+
+            <h3>
+                Today's Focus
+            </h3>
+
+            <h1>
+                {{ productivity_score }}%
+            </h1>
+
+            <p>
+                Productivity Performance
+            </p>
+
+        </div>
+
+        <div class="hero-mini-grid">
+
+            <div class="mini-card">
+
+                <span>🎯</span>
+
+                <h2>
+                    {{ total_goals }}
+                </h2>
+
+                <p>
+                    Active Goals
+                </p>
+
+            </div>
+
+            <div class="mini-card">
+
+                <span>🔥</span>
+
+                <h2>
+                    {{ habit_score }}%
+                </h2>
+
+                <p>
+                    Habit Score
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<section id="dashboard-section">
+
+<div class="hero-dashboard">
+
+    <!-- LEFT -->
+
+    <div class="hero-left">
+
+        <div class="hero-badge">
+
+            🚀 GoalSphere AI Productivity
+
+        </div>
+
+        <h1 id="greetingText">
+
+            Welcome,
+            {{ session.username }}
+
+        </h1>
+
+        <p>
+
+            Build consistency,
+            achieve smarter goals,
+            and master your productivity.
+
+        </p>
+
+        <div class="hero-stats">
+
+            <div class="mini-stat">
+
+                <span>
+                    Goals
+                </span>
+
+                <h3>
+                    {{ total_goals }}
+                </h3>
+
+            </div>
+
+            <div class="mini-stat">
+
+                <span>
+                    Productivity
+                </span>
+
+                <h3>
+                    {{ productivity_score }}%
+                </h3>
+
+            </div>
+
+            <div class="mini-stat">
+
+                <span>
+                    Level
+                </span>
+
+                <h3>
+                    {{ level }}
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="hero-right">
+
+        <div class="clock-box">
+
+            <h2 id="liveClock">
+                00:00:00
+            </h2>
+
+            <p id="liveDate">
+                Loading...
+            </p>
+
+        </div>
+
+        <div class="hero-actions">
+
+            <button
+            id="darkToggle"
+            class="hero-btn">
+
+                🌙 Theme
+
+            </button>
+
+            <a
+            href="/export-pdf"
+            class="hero-btn">
+
+                PDF Report
+
+            </a>
+
+            <a
+            href="/export-excel"
+            class="hero-btn">
+
+                Excel Report
+
+            </a>
+
+            <a
+            href="/logout"
+            class="hero-btn logout">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+</section>
+
+
+<!-- ANALYTICS -->
+<section id="analytics-section">
+
+<div class="analytics-grid">
+
+    <div class="analytics-card">
+
+    <div class="card-icon">
+        🎯
+    </div>
+
+    <h3>Total Goals</h3>
+
+    <h1>{{ total_goals }}</h1>
+
+    <p>All productivity goals</p>
+
+</div>
+
+    <div class="analytics-card">
+
+    <div class="card-icon">
+        ✅
+    </div>
+
+    <h3>Completed Goals</h3>
+
+    <h1>{{ completed_goals }}</h1>
+
+    <p>Successfully completed</p>
+
+</div>
+
+    <div class="analytics-card">
+
+    <div class="card-icon">
+        📈
+    </div>
+
+    <h3>Average Progress</h3>
+
+    <h1>{{ avg_progress }}%</h1>
+
+    <p>Overall performance</p>
+
+</div>
+
+    <div class="analytics-card">
+
+    <div class="card-icon">
+        📅
+    </div>
+
+    <h3>Activities</h3>
+
+    <h1>{{ total_activities }}</h1>
+
+    <p>Scheduled activities</p>
+
+</div>
+
+    <div class="analytics-card productivity">
+
+    <div class="card-icon">
+        ⚡
+    </div>
+
+    <h3>Productivity Score</h3>
+
+    <h1>{{ productivity_score }}</h1>
+
+    <p>Performance indicator</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- CHARTS -->
+
+<div class="chart-grid">
+
+    <div class="chart-card">
+
+        <h2>Goal Progress Analytics</h2>
+
+        <canvas id="goalChart"></canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h2>Activity Categories</h2>
+
+        <canvas id="activityChart"></canvas>
+
+    </div>
+
+</div>
+
+
+
+
+
+<!-- PRODUCTIVITY TOOLS -->
+<section id="tools-section">
+
+<div class="productivity-section">
+
+    <div class="section-title">
+        <h2>Productivity Tools</h2>
+    </div>
+
+    <div class="productivity-grid">
+
+        <!-- POMODORO -->
+
+        <div class="tool-card">
+
+            <h3>Pomodoro Timer</h3>
+
+            <div id="pomodoro-time">
+                25:00
+            </div>
+
+            <div class="tool-buttons">
+
+                <button onclick="startPomodoro()">
+                    Start
+                </button>
+
+                <button onclick="resetPomodoro()">
+                    Reset
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- STOPWATCH -->
+
+        <div class="tool-card">
+
+            <h3>Stopwatch</h3>
+
+            <div id="stopwatch-time">
+                00:00:00
+            </div>
+
+            <div class="tool-buttons">
+
+                <button onclick="startStopwatch()">
+                    Start
+                </button>
+
+                <button onclick="stopStopwatch()">
+                    Stop
+                </button>
+
+                <button onclick="resetStopwatch()">
+                    Reset
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- FOCUS MODE -->
+
+        <div class="tool-card">
+
+            <h3>Deep Focus Mode</h3>
+
+            <p>
+                Eliminate distractions and
+                maximize productivity.
+            </p>
+
+            <button class="focus-btn">
+                Enter Focus Mode
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- CALENDAR -->
+<section id="calendar-section">
+<div class="calendar-section">
+
+    <div class="section-title">
+        <h2>Calendar Planner</h2>
+    </div>
+
+    <div class="calendar-card">
+
+        <div class="calendar-header">
+
+            <button onclick="prevMonth()">
+                ◀
+            </button>
+
+            <h2 id="monthYear"></h2>
+
+            <button onclick="nextMonth()">
+                ▶
+            </button>
+
+        </div>
+
+        <div class="calendar-days">
+
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+
+        </div>
+
+        <div id="calendarDates"
+        class="calendar-dates">
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+
+<!-- REMINDER SECTION -->
+<section id="reminder-section">
+<div class="reminder-section">
+
+    <div class="section-title">
+        <h2>Smart Reminder Center</h2>
+    </div>
+
+    <div class="reminder-grid">
+
+        <div class="reminder-card">
+
+            <h3>Enable Notifications</h3>
+
+            <p>
+                Allow browser notifications
+                for reminders and alerts.
+            </p>
+
+            <button onclick="enableNotifications()">
+                Enable
+            </button>
+
+        </div>
+
+        <div class="reminder-card">
+
+            <h3>Productivity Reminder</h3>
+
+            <p>
+                Get smart reminders to
+                stay focused and productive.
+            </p>
+
+            <button onclick="showProductivityReminder()">
+                Test Reminder
+            </button>
+
+        </div>
+
+        <div class="reminder-card">
+
+            <h3>Deadline Warning</h3>
+
+            <p>
+                Receive alerts for goals
+                approaching deadline.
+            </p>
+
+            <button onclick="showDeadlineWarning()">
+                Test Warning
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+<!-- HABIT TRACKER -->
+<section id="habits-section">
+<div class="habit-section">
+
+    <div class="section-title">
+        <h2>Habit Tracker</h2>
+    </div>
+
+    <!-- ANALYTICS -->
+
+    <div class="habit-analytics">
+
+        <div class="habit-stat">
+
+            <h3>Total Habits</h3>
+            <h1>{{ total_habits }}</h1>
+
+        </div>
+
+        <div class="habit-stat">
+
+            <h3>Completed</h3>
+            <h1>{{ completed_habits }}</h1>
+
+        </div>
+
+        <div class="habit-stat">
+
+            <h3>Consistency Score</h3>
+            <h1>{{ habit_score }}%</h1>
+
+        </div>
+
+    </div>
+
+    <!-- FORM -->
+
+    <div class="habit-form">
+
+        <form action="/add-habit"
+        method="POST">
+
+            <input
+            type="text"
+            name="title"
+            placeholder="Habit title"
+            required>
+
+            <select name="frequency">
+
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Monthly</option>
+
+            </select>
+
+            <button type="submit">
+                Add Habit
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- HABIT GRID -->
+
+    <div class="habit-grid">
+
+        {% for habit in habits %}
+
+        <div class="habit-card">
+
+            <div class="habit-top">
+
+                <div>
+
+                    <h3>{{ habit[1] }}</h3>
+
+                    <small>
+                        {{ habit[2] }}
+                    </small>
+
+                </div>
+
+                {% if habit[4] %}
+
+                    <span class="habit-status done">
+                        Completed
+                    </span>
+
+                {% else %}
+
+                    <span class="habit-status pending">
+                        Pending
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+            <div class="habit-info">
+
+                <p>
+                    🔥 Streak:
+                    {{ habit[3] }}
+                </p>
+
+            </div>
+
+            {% if not habit[4] %}
+
+            <a
+            href="/complete-habit/{{ habit[0] }}"
+            class="habit-btn">
+
+                Complete Habit
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- EISENHOWER MATRIX -->
+<section id="matrix-section">
+<div class="matrix-section">
+
+    <div class="section-title">
+        <h2>Eisenhower Matrix</h2>
+    </div>
+
+    <!-- FORM -->
+
+    <div class="matrix-form">
+
+        <form action="/add-matrix-task"
+        method="POST">
+
+            <input
+            type="text"
+            name="title"
+            placeholder="Task title"
+            required>
+
+            <select name="quadrant">
+
+                <option value="Q1">
+                    Q1 - Important & Urgent
+                </option>
+
+                <option value="Q2">
+                    Q2 - Important & Not Urgent
+                </option>
+
+                <option value="Q3">
+                    Q3 - Not Important & Urgent
+                </option>
+
+                <option value="Q4">
+                    Q4 - Not Important & Not Urgent
+                </option>
+
+            </select>
+
+            <button type="submit">
+                Add Task
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- MATRIX GRID -->
+
+    <div class="matrix-grid">
+
+        <!-- Q1 -->
+
+        <div class="quadrant q1">
+
+            <h3>Q1</h3>
+
+            <p>
+                Important & Urgent
+            </p>
+
+            {% for task in matrix_tasks %}
+
+                {% if task[2] == "Q1" %}
+
+                    <div class="matrix-task">
+                        {{ task[1] }}
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+        <!-- Q2 -->
+
+        <div class="quadrant q2">
+
+            <h3>Q2</h3>
+
+            <p>
+                Important & Not Urgent
+            </p>
+
+            {% for task in matrix_tasks %}
+
+                {% if task[2] == "Q2" %}
+
+                    <div class="matrix-task">
+                        {{ task[1] }}
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+        <!-- Q3 -->
+
+        <div class="quadrant q3">
+
+            <h3>Q3</h3>
+
+            <p>
+                Not Important & Urgent
+            </p>
+
+            {% for task in matrix_tasks %}
+
+                {% if task[2] == "Q3" %}
+
+                    <div class="matrix-task">
+                        {{ task[1] }}
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+        <!-- Q4 -->
+
+        <div class="quadrant q4">
+
+            <h3>Q4</h3>
+
+            <p>
+                Not Important & Not Urgent
+            </p>
+
+            {% for task in matrix_tasks %}
+
+                {% if task[2] == "Q4" %}
+
+                    <div class="matrix-task">
+                        {{ task[1] }}
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- GOAL FORM -->
+<section id="goals-section">
+<div class="goal-form">
+
+<form action="/add-goal" method="POST">
+
+    <input type="text"
+    name="title"
+    placeholder="Goal title"
+    required>
+
+    <select name="goal_type">
+        <option>Short Term</option>
+        <option>Middle Term</option>
+        <option>Long Term</option>
+    </select>
+
+    <select name="priority">
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+        <option>Critical</option>
+    </select>
+
+    <input type="number"
+    name="progress"
+    placeholder="Progress"
+    min="0"
+    max="100">
+
+    <input type="date"
+    name="deadline">
+
+    <button type="submit">
+        Add Goal
+    </button>
+
+</form>
+
+</div>
+
+
+
+<!-- GOAL GRID -->
+
+<div class="goal-grid">
+
+{% for goal in goals %}
+
+<div class="goal-card">
+
+    <div class="goal-header">
+
+        <div>
+            <h3>{{ goal[1] }}</h3>
+            <small>{{ goal[2] }}</small>
+        </div>
+
+        <span class="priority {{ goal[3]|lower }}">
+            {{ goal[3] }}
+        </span>
+
+    </div>
+
+    <div class="progress-bar">
+
+        <div class="progress"
+        style="width: {{ goal[4] }}%">
+        </div>
+
+    </div>
+
+    <div class="goal-footer">
+
+        <span>{{ goal[4] }}%</span>
+        <span>{{ goal[5] }}</span>
+
+    </div>
+
+    <form
+    action="/update-progress/{{ goal[0] }}"
+    method="POST"
+    class="update-form">
+
+        <input type="number"
+        name="progress"
+        min="0"
+        max="100"
+        placeholder="Update %">
+
+        <button type="submit">
+            Update
+        </button>
+
+    </form>
+
+    <a
+    class="delete-btn"
+    href="/delete-goal/{{ goal[0] }}">
+
+        Delete
+
+    </a>
+
+</div>
+
+{% endfor %}
+
+</div>
+</section>
+
+
+<!-- ACTIVITY SECTION -->
+
+<section id="activities-section">
+
+<div class="activity-section">
+
+    <div class="section-title">
+        <h2>Activity Scheduler</h2>
+    </div>
+
+    <!-- FORM -->
+
+    <div class="activity-form">
+
+        <form action="/add-activity"
+        method="POST">
+
+            <input
+            type="text"
+            name="title"
+            placeholder="Activity Title"
+            required>
+
+            <input
+            type="date"
+            name="activity_date"
+            required>
+
+            <input
+            type="time"
+            name="activity_time"
+            required>
+
+            <select name="category">
+
+                <option>Work</option>
+                <option>Study</option>
+                <option>Health</option>
+                <option>Personal</option>
+
+            </select>
+
+            <button type="submit">
+                Add Activity
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- ACTIVITY LIST -->
+
+    <div class="activity-grid">
+
+        {% for activity in activities %}
+
+        <div class="activity-card">
+
+            <div class="activity-top">
+
+                <h3>{{ activity[1] }}</h3>
+
+                <span class="category">
+                    {{ activity[4] }}
+                </span>
+
+            </div>
+
+            <div class="activity-info">
+
+                <p>📅 {{ activity[2] }}</p>
+                <p>⏰ {{ activity[3] }}</p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+</section>
+
+
+<!-- PRODUCTIVITY HEATMAP -->
+
+<section id="heatmap-section">
+
+<div class="heatmap-section">
+
+    <div class="section-title">
+
+        <h2>
+            Productivity Heatmap
+        </h2>
+
+    </div>
+
+    <div class="heatmap-card">
+
+        <div class="heatmap-grid">
+
+            {% for i in range(1, 91) %}
+
+            <div class="heat-day level-{{ (i % 5) + 1 }}">
+
+                <span>
+                    {{ i }}
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="heatmap-legend">
+
+            <span>Low</span>
+
+            <div class="legend-box level-1"></div>
+            <div class="legend-box level-2"></div>
+            <div class="legend-box level-3"></div>
+            <div class="legend-box level-4"></div>
+            <div class="legend-box level-5"></div>
+
+            <span>High</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- AI PRODUCTIVITY INSIGHT -->
+
+<div class="insight-section">
+
+    <div class="section-title">
+        <h2>AI Productivity Insights</h2>
+    </div>
+
+    <div class="insight-grid">
+
+        {% for insight in insights %}
+
+        <div class="insight-card {{ insight.type }}">
+
+            <div class="insight-header">
+
+                {% if insight.type == "success" %}
+                    <span>✅</span>
+                {% elif insight.type == "warning" %}
+                    <span>⚠️</span>
+                {% else %}
+                    <span>🚨</span>
+                {% endif %}
+
+                <h3>
+                    {{ insight.title }}
+                </h3>
+
+            </div>
+
+            <p>
+                {{ insight.message }}
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+
+<!-- ACHIEVEMENT SYSTEM -->
+<section id="achievement-section">
+<div class="achievement-section">
+
+    <div class="section-title">
+        <h2>Achievement & Gamification</h2>
+    </div>
+
+    <!-- LEVEL CARD -->
+
+    <div class="level-card">
+
+        <div>
+
+            <h3>Productivity Level</h3>
+
+            <h1>
+                Level {{ level }}
+            </h1>
+
+        </div>
+
+        <div class="xp-box">
+
+            <h2>{{ xp_total }} XP</h2>
+
+        </div>
+
+    </div>
+
+    <!-- ACHIEVEMENT GRID -->
+
+    <div class="achievement-grid">
+
+        {% for achievement in achievements %}
+
+        <div class="achievement-card">
+
+            <div class="achievement-top">
+
+                <div class="badge-icon">
+                    🏆
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ achievement[1] }}
+                    </h3>
+
+                    <p>
+                        {{ achievement[2] }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="achievement-footer">
+
+                <span>
+                    {{ achievement[3] }} XP
+                </span>
+
+                {% if achievement[4] %}
+
+                    <span class="unlocked">
+                        Unlocked
+                    </span>
+
+                {% else %}
+
+                    <span class="locked">
+                        Locked
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+</section>
+
+</div>
+
+<script>
+
+const toggle = document.getElementById("darkToggle");
+
+toggle.addEventListener("click", () => {
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("dark")
+        ? "dark"
+        : "light"
+    );
+
+});
+
+if(localStorage.getItem("theme") === "dark"){
+    document.body.classList.add("dark");
+}
+
+</script>
+
+<script>
+
+const goalCtx =
+document.getElementById("goalChart");
+
+if(goalCtx){
+
+new Chart(goalCtx, {
+}
+    type: 'line',
+
+    data: {
+
+        labels: {{ goal_titles|tojson }},
+
+        datasets: [{
+
+            label: 'Goal Progress',
+
+            data: {{ goal_progress|tojson }},
+
+            borderWidth: 3,
+            tension: 0.4,
+            fill: true
+
+        }]
+    }
+});
+
+const activityCtx = 
+document.getElementById('activityChart');
+
+if(goalCtx){
+
+new Chart(activityCtx, {
+}
+    type: 'doughnut',
+
+    data: {
+
+        labels: {{ categories|tojson }},
+
+        datasets: [{
+
+            data: {{ category_count|tojson }},
+
+            borderWidth: 1
+
+        }]
+    }
+});
+
+</script>
+<script>
+
+/* POMODORO */
+
+let pomodoroTime = 25 * 60;
+let pomodoroInterval;
+
+function updatePomodoro(){
+
+    let minutes = Math.floor(pomodoroTime / 60);
+    let seconds = pomodoroTime % 60;
+
+    document.getElementById(
+        "pomodoro-time"
+    ).innerText =
+
+    `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+}
+
+function startPomodoro(){
+
+    clearInterval(pomodoroInterval);
+
+    pomodoroInterval = setInterval(() => {
+
+        if(pomodoroTime > 0){
+
+            pomodoroTime--;
+            updatePomodoro();
+
+        }
+
+    },1000);
+}
+
+function resetPomodoro(){
+
+    clearInterval(pomodoroInterval);
+
+    pomodoroTime = 25 * 60;
+
+    updatePomodoro();
+}
+
+/* STOPWATCH */
+
+let stopwatchInterval;
+let stopwatchSeconds = 0;
+
+function updateStopwatch(){
+
+    let hrs = Math.floor(stopwatchSeconds / 3600);
+    let mins = Math.floor((stopwatchSeconds % 3600) / 60);
+    let secs = stopwatchSeconds % 60;
+
+    document.getElementById(
+        "stopwatch-time"
+    ).innerText =
+
+    `${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+}
+
+function startStopwatch(){
+
+    clearInterval(stopwatchInterval);
+
+    stopwatchInterval = setInterval(() => {
+
+        stopwatchSeconds++;
+        updateStopwatch();
+
+    },1000);
+}
+
+function stopStopwatch(){
+
+    clearInterval(stopwatchInterval);
+}
+
+function resetStopwatch(){
+
+    clearInterval(stopwatchInterval);
+
+    stopwatchSeconds = 0;
+
+    updateStopwatch();
+}
+
+</script>
+
+<script>
+
+/* CALENDAR */
+
+const monthYear = document.getElementById(
+    "monthYear"
+);
+
+const calendarDates = document.getElementById(
+    "calendarDates"
+);
+
+let currentDate = new Date();
+
+function renderCalendar(){
+
+    calendarDates.innerHTML = "";
+
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+
+    const firstDay = new Date(
+        year,
+        month,
+        1
+    ).getDay();
+
+    const lastDate = new Date(
+        year,
+        month + 1,
+        0
+    ).getDate();
+
+    const monthNames = [
+
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+
+    ];
+
+    monthYear.innerText =
+        `${monthNames[month]} ${year}`;
+
+    for(let i=0; i<firstDay; i++){
+
+        const empty = document.createElement("div");
+        calendarDates.appendChild(empty);
+
+    }
+
+    for(let day=1; day<=lastDate; day++){
+
+        const dateBox =
+            document.createElement("div");
+
+        dateBox.classList.add("date-box");
+
+        dateBox.innerText = day;
+
+        const today = new Date();
+
+        if(
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+        ){
+            dateBox.classList.add("today");
+        }
+
+        calendarDates.appendChild(dateBox);
+    }
+}
+
+function prevMonth(){
+
+    currentDate.setMonth(
+        currentDate.getMonth() - 1
+    );
+
+    renderCalendar();
+}
+
+function nextMonth(){
+
+    currentDate.setMonth(
+        currentDate.getMonth() + 1
+    );
+
+    renderCalendar();
+}
+
+renderCalendar();
+
+</script>
+
+<script>
+
+/* NOTIFICATION */
+
+function enableNotifications(){
+
+    if(Notification.permission !== "granted"){
+
+        Notification.requestPermission();
+
+    }
+}
+
+function showProductivityReminder(){
+
+    if(Notification.permission === "granted"){
+
+        new Notification(
+            "GoalSphere Productivity Reminder",
+            {
+                body:
+                "Stay focused and continue your goals 🚀"
+            }
+        );
+
+    }
+}
+
+function showDeadlineWarning(){
+
+    if(Notification.permission === "granted"){
+
+        new Notification(
+            "Deadline Warning",
+            {
+                body:
+                "Some goals are nearing deadline ⚠️"
+            }
+        );
+
+    }
+}
+
+/* AUTO SMART REMINDER */
+
+setInterval(() => {
+
+    const hour = new Date().getHours();
+
+    if(
+        hour === 9 &&
+        Notification.permission === "granted"
+    ){
+
+        new Notification(
+            "Morning Productivity Reminder",
+            {
+                body:
+                "Start your day and complete your goals 🌞"
+            }
+        );
+
+    }
+
+}, 60000);
+
+</script>
+
+<script>
+
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".menu-link");
+navLinks[0]?.classList.add("active");
+
+window.addEventListener("scroll", () => {
+
+    let current = "";
+
+    sections.forEach(section => {
+
+        const sectionTop = section.offsetTop;
+
+        if(window.scrollY >= sectionTop - 200)
+            current = section.getAttribute("id");
+        }
+
+    });
+
+    navLinks.forEach(link => {
+
+        link.classList.remove("active");
+
+        if(
+            link.getAttribute("href")
+            === "#" + current
+        ){
+            link.classList.add("active");
+        }
+
+    });
+
+});
+
+</script>
+
+<div class="floating-menu">
+
+    <button id="floatingToggle">
+        +
+    </button>
+
+    <div class="floating-actions" id="floatingActions">
+
+        <a href="#goals-section">
+            🎯 Goal
+        </a>
+
+        <a href="#activities-section">
+            📅 Activity
+        </a>
+
+        <a href="#habits-section">
+            🔥 Habit
+        </a>
+
+        <a href="#tools-section">
+            ⏱ Timer
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+const floatingToggle =
+document.getElementById("floatingToggle");
+
+const floatingActions =
+document.getElementById("floatingActions");
+
+floatingToggle.addEventListener("click",()=>{
+
+    if(
+        floatingActions.style.display
+        === "flex"
+    ){
+        floatingActions.style.display="none";
+    }else{
+        floatingActions.style.display="flex";
+    }
+
+});
+
+</script>
+
+<script>
+
+function updateClock(){
+
+    const now = new Date();
+
+    const time =
+        now.toLocaleTimeString();
+
+    const date =
+        now.toDateString();
+
+    document.getElementById(
+        "liveClock"
+    ).innerText = time;
+
+    document.getElementById(
+        "liveDate"
+    ).innerText = date;
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+</script>
+
+{% endblock %}

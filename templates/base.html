@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>GoalSphere</title>
+
+    <!-- FONT -->
+
+    <link rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- CHART -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<!-- MOBILE OVERLAY -->
+
+<div class="sidebar-overlay"
+onclick="toggleSidebar()">
+
+</div>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar"
+id="sidebar">
+
+    <!-- LOGO -->
+
+    <div class="logo-area">
+
+        <div class="logo-icon">
+            🎯
+        </div>
+
+        <div>
+
+            <h2>GoalSphere</h2>
+
+            <p>
+                Productivity OS
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- MENU -->
+
+    <ul class="menu">
+
+        <li>
+
+            <a
+            href="#dashboard-section"
+            class="menu-link active">
+
+                <i class="fa-solid fa-house"></i>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#analytics-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                <span>
+                    Analytics
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#tools-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <span>
+                    Productivity Tools
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#calendar-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                <span>
+                    Calendar
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#reminder-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-bell"></i>
+
+                <span>
+                    Reminder
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#habits-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-fire"></i>
+
+                <span>
+                    Habit Tracker
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#matrix-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-table-cells-large"></i>
+
+                <span>
+                    Matrix
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#goals-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-bullseye"></i>
+
+                <span>
+                    Goals
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#activities-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                <span>
+                    Activities
+                </span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a
+            href="#achievement-section"
+            class="menu-link">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                <span>
+                    Achievements
+                </span>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+    <!-- SIDEBAR FOOTER -->
+
+    <div class="sidebar-footer">
+
+        <div class="upgrade-card">
+
+            <h3>
+                GoalSphere Pro
+            </h3>
+
+            <p>
+                Unlock AI productivity tools
+            </p>
+
+            <button>
+                Upgrade
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main-wrapper">
+
+    <!-- MOBILE TOPBAR -->
+
+    <div class="mobile-topbar">
+
+        <button
+        class="menu-toggle"
+        onclick="toggleSidebar()">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+        <h2>
+            GoalSphere
+        </h2>
+
+    </div>
+
+    <!-- CONTENT -->
+
+    <div class="main-content">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+</div>
+
+<!-- SIDEBAR SCRIPT -->
+
+<script>
+
+function toggleSidebar(){
+
+    document
+    .getElementById("sidebar")
+    .classList.toggle("show");
+
+    document
+    .querySelector(".sidebar-overlay")
+    .classList.toggle("show");
+}
+
+/* ACTIVE MENU */
+
+const sections =
+document.querySelectorAll("section");
+
+const navLinks =
+document.querySelectorAll(".menu-link");
+
+window.addEventListener("scroll", () => {
+
+    let current = "";
+
+    sections.forEach(section => {
+
+        const sectionTop =
+        section.offsetTop;
+
+        if(pageYOffset >= sectionTop - 150){
+
+            current =
+            section.getAttribute("id");
+
+        }
+
+    });
+
+    navLinks.forEach(link => {
+
+        link.classList.remove("active");
+
+        if(
+            link.getAttribute("href")
+            === "#" + current
+        ){
+
+            link.classList.add("active");
+
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+
+</html>
